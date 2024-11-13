@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Text-Summarizer-Project  # Path to your backend directory
+    container_name: backend_container
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: ./frontend  # Path to your frontend directory
+    container_name: frontend_container
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000  # Backend URL
+
+networks:
+  default:
+    driver: bridge
